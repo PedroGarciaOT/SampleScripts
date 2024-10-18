@@ -17,10 +17,25 @@ set FOD_RELEASE=
 set FOD_NEW_RELEASE=
 
 ECHO ON
-REM ECHO "BUILD TASKS"
-REM git clone -b main https://github.com/fortify/IWA-Java.git .\
+ECHO "PRE-BUILD TASKS"
+REM # Clone Repo
+git clone -b main https://github.com/fortify/IWA-Java.git TargetApplication
 
-REM mvn clean package
+REM # Install tools
+fcli tool sc-client install --version latest
+
+fcli tool fod-uploader install --version latest
+
+ECHO "BUILD TASKS"
+cd TargetApplication
+
+REM # Build and resolve dependencies
+REM call mvn clean package
+
+REM # Package application
+call scancentral package -o ..\package.zip
+
+cd ..
 
 ECHO "POST-BUILD TASKS"
 REM # Login into FoD
@@ -42,14 +57,6 @@ fcli util variable contents fodrel -o json
 REM # Setup subscription
 fcli fod sast setup --release "::fodrel::" --assessment-type "Static Assessment" --frequency "Subscription" --entitlement-id %FOD_ENTITLEMENT_ID% --technology-stack "Auto Detect" --audit-preference "Automated" --use-aviator -o json
 
-REM # Install tools
-fcli tool sc-client install --version latest
-
-fcli tool fod-uploader install --version latest
-
-REM # Package application
-REM scancentral package -o package.zip
-
 REM # Start scan
 fcli fod sast-scan start --release "::fodrel::" -f package.zip --store fodscan
 
@@ -61,6 +68,3 @@ fcli fod action run check-policy --release "::fodrel::"
 
 REM # Logout from FoD
 fcli fod session logout
-
-REM cd..
-REM rmdir /s /q 

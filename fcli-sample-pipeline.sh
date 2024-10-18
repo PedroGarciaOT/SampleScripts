@@ -2,7 +2,7 @@
 clear
 # export environment variables 
 # setenv.sh
-export PATH=/home/fortify/tools/bin;${PATH}
+export PATH=/home/fortify/tools/bin:${PATH}
 export FOD_URL="https://api.ams.fortify.com/"
 # export FOD_CLIENT_ID=
 # export FOD_CLIENT_SECRET=

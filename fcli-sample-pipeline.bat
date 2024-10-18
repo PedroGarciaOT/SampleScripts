@@ -1,6 +1,7 @@
 ECHO OFF
 cls
 REM # Set environment variables 
+REM setenv.bat
 set PATH=%USERPROFILE%\fortify\tools\bin;%PATH%
 set FOD_URL="https://api.ams.fortify.com/"
 REM #set FOD_CLIENT_ID=

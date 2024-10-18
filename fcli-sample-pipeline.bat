@@ -22,6 +22,10 @@ ECHO "PRE-BUILD TASKS"
 REM # Clone Repo
 git clone -b main https://github.com/fortify/IWA-Java.git TargetApplication
 
+REM # Download and unpack fcli 
+curl -sL https://github.com/fortify/fcli/releases/latest/download/fcli-windows.zip -o fcli-windows.zip
+unzip fcli-windows.zip -d .\
+
 REM # Install tools
 fcli tool sc-client install --version latest
 

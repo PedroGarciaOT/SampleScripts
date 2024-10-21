@@ -34,10 +34,10 @@ echo "BUILD TASKS"
 cd ./TargetApplication
 
 # Build and resolve dependencies
-# call mvn clean package
+# mvn clean package
 
 # Package application
-call scancentral package -o ../package.zip
+scancentral package -o ../package.zip
 
 cd ../
 

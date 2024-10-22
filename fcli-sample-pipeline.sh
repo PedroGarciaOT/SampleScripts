@@ -17,7 +17,11 @@ export FOD_RELEASE=
 export FOD_NEW_RELEASE=
 
 # use setenv script to set environment variables
-setenv.sh
+export ENV_FILE="./setenv.sh"
+if [! -f ${ENV_FILE}] then 
+    sudo chmod +x ${ENV_FILE}
+    ${ENV_FILE}
+fi
 
 echo "PRE-BUILD TASKS"
 # Clone Repo

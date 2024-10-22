@@ -75,7 +75,7 @@ echo "-========== POST-BUILD TASKS ==========-"
 # ./fcli util variable contents fodapp -o json
 
 # Create release
-./fcli fod release create ${FOD_APPLICATION%:%FOD_RELEASE} --status Production  --skip-if-exists --store fodrel
+./fcli fod release create ${FOD_APPLICATION}:${FOD_RELEASE} --status Production  --skip-if-exists --store fodrel
 
 # Print release details
 ./fcli util variable contents fodrel -o json

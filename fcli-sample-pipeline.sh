@@ -1,7 +1,6 @@
 #!/bin/bash
 clear
 # export environment variables 
-# setenv.sh
 export PATH=/home/fortify/tools/bin:${PATH}
 export FOD_URL="https://api.ams.fortify.com/"
 # export FOD_CLIENT_ID=
@@ -17,13 +16,17 @@ export FOD_APPLICATION=
 export FOD_RELEASE=
 export FOD_NEW_RELEASE=
 
+# use setenv script to set environment variables
+setenv.sh
+
 echo "PRE-BUILD TASKS"
 # Clone Repo
 git clone -b main https://github.com/fortify/IWA-Java.git ./TargetApplication
 
 # Download and unpack fcli 
-curl -sL https://github.com/fortify/fcli/releases/latest/download/fcli-windows.zip -o fcli-windows.zip
-unzip -qq fcli-windows.zip -d ./
+curl -sL https://github.com/fortify/fcli/releases/latest/download/fcli-linux.tgz -o fcli-linux.tgz
+tar -pxzf fcli-linux.tgz
+source ./fcli_completion
 
 # Install tools
 fcli tool sc-client install --version latest

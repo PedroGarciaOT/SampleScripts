@@ -1,7 +1,6 @@
 ECHO OFF
 cls
 REM # Set environment variables 
-REM setenv.bat
 set PATH=%USERPROFILE%\fortify\tools\bin;%PATH%
 set FOD_URL="https://api.ams.fortify.com/"
 REM #set FOD_CLIENT_ID=
@@ -16,6 +15,9 @@ set FOD_ENTITLEMENT_ID=
 set FOD_APPLICATION=
 set FOD_RELEASE=
 set FOD_NEW_RELEASE=
+
+REM # use setenv script to set environment variables
+call setenv.bat
 
 ECHO ON
 ECHO "PRE-BUILD TASKS"

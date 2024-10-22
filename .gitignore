@@ -18,3 +18,5 @@ buildNumber.properties
 /package.zip
 /scrap.bat
 /test
+/setenv.sh
+/setenv.bat

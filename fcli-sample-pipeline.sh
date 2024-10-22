@@ -23,7 +23,7 @@ export FOD_URL="https://api.ams.fortify.com/"
 export ENV_FILE="./setenv.sh"
 if [ -f ${ENV_FILE} ]; then 
     echo "ENV_FILE=${ENV_FILE}"
-    sudo chmod +x ${ENV_FILE}
+    #sudo chmod +x ${ENV_FILE}
     ${ENV_FILE}    
 fi
 

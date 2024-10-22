@@ -52,6 +52,8 @@ source ./fcli_completion
 
 ./fcli tool fod-uploader install --version latest
 
+./fcli tool debricked-cli install --version latest
+
 echo "-========== BUILD TASKS ==========-"
 cd ./TargetApplication
 
@@ -59,7 +61,7 @@ cd ./TargetApplication
 # mvn clean package
 
 # Package application
-scancentral package -o ../package.zip
+scancentral package -oss -o ../package.zip
 
 cd ../
 
@@ -81,7 +83,7 @@ echo "-========== POST-BUILD TASKS ==========-"
 ./fcli util variable contents fodrel -o json
 
 # Setup subscription
-./fcli fod sast setup --release "::fodrel::" --assessment-type "Static Assessment" --frequency "Subscription" --entitlement-id ${FOD_ENTITLEMENT_ID} --technology-stack "Auto Detect" --audit-preference "Automated" --use-aviator -o json
+./fcli fod sast setup --release "::fodrel::" --assessment-type "Static Assessment" --frequency "Subscription" --entitlement-id ${FOD_ENTITLEMENT_ID} --technology-stack "Auto Detect" --audit-preference "Automated" --use-aviator --oss -o json
 
 # Start scan
 ./fcli fod sast-scan start --release "::fodrel::" -f package.zip --store fodscan

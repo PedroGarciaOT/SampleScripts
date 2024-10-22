@@ -67,8 +67,11 @@ fcli fod sast setup --release "::fodrel::" --assessment-type "Static Assessment"
 REM # Start scan
 fcli fod sast-scan start --release "::fodrel::" -f package.zip --store fodscan
 
+REM # Print scan request details
+fcli util variable contents fodscan -o json
+
 REM # Wait for scan to finish
-fcli fod sast-scan wait-for "::fodscan::scanId"
+fcli fod sast-scan wait-for "::fodscan::" --interval "3m"
 
 REM # Run quality gate
 fcli fod action run check-policy --release "::fodrel::"

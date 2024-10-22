@@ -92,7 +92,7 @@ echo "# Print scan request details"
 ./fcli util variable contents fodscan -o json
 
 echo "# Wait for scan to finish"
-./fcli fod sast-scan wait-for "::fodscan::scanId"
+./fcli fod sast-scan wait-for "::fodscan::scanId" --interval 3m
 
 echo "# Run quality/security gate"
 ./fcli fod action run check-policy --release "::fodrel::"

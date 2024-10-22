@@ -1,7 +1,7 @@
 #!/bin/bash
 clear
 # export environment variables 
-export PATH=/home/fortify/tools/bin:${PATH}
+export PATH=${HOME}/tools/bin:${PATH}
 export FOD_URL="https://api.ams.fortify.com/"
 # export FOD_CLIENT_ID=
 # export FOD_CLIENT_SECRET=

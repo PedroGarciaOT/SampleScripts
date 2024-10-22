@@ -47,7 +47,7 @@ curl -sL https://github.com/fortify/fcli/releases/latest/download/fcli-linux.tgz
 tar -pxzf fcli-linux.tgz
 source ./fcli_completion
 
-# Install tools
+echo "# Install tools"
 ./fcli tool sc-client install --version latest
 
 ./fcli tool fod-uploader install --version latest
@@ -60,13 +60,13 @@ cd ./TargetApplication
 # Build and resolve dependencies
 # mvn clean package
 
-# Package application
+echo "# Package application"
 scancentral package -oss -o ../package.zip
 
 cd ../
 
 echo "-========== POST-BUILD TASKS ==========-"
-# Login into FoD
+echo "# Login into Fortify on Demand"
 #./fcli fod session login --url ${FOD_URL} --client-id ${FOD_CLIENT_ID} --client-secret ${FOD_CLIENT_SECRET} -k
 ./fcli fod session login --url ${FOD_URL} --user ${FOD_USER} --password ${FOD_PASSWORD} --tenant ${FOD_TENANT} -k
 
@@ -76,23 +76,26 @@ echo "-========== POST-BUILD TASKS ==========-"
 # Print application details
 # ./fcli util variable contents fodapp -o json
 
-# Create release
+echo "# Create release"
 ./fcli fod release create ${FOD_APPLICATION}:${FOD_RELEASE} --status Production  --skip-if-exists --store fodrel
 
-# Print release details
+echo "# Print release details"
 ./fcli util variable contents fodrel -o json
 
-# Setup subscription
+echo "# Setup subscription"
 ./fcli fod sast setup --release "::fodrel::" --assessment-type "Static Assessment" --frequency "Subscription" --entitlement-id ${FOD_ENTITLEMENT_ID} --technology-stack "Auto Detect" --audit-preference "Automated" --use-aviator --oss -o json
 
-# Start scan
+echo "# Submit scan request"
 ./fcli fod sast-scan start --release "::fodrel::" -f package.zip --store fodscan
 
-# Wait for scan to finish
+echo "# Print scan request details"
+./fcli util variable contents fodscan -o json
+
+echo "# Wait for scan to finish"
 ./fcli fod sast-scan wait-for "::fodscan::scanId"
 
-# Run quality gate
+echo "# Run quality/security gate"
 ./fcli fod action run check-policy --release "::fodrel::"
 
-# Logout from FoD
+echo "# Logout from Fortify on Demand"
 ./fcli fod session logout

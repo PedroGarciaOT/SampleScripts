@@ -18,7 +18,7 @@ export FOD_NEW_RELEASE=
 
 # use setenv script to set environment variables
 export ENV_FILE="./setenv.sh"
-if [! -f ${ENV_FILE}] then 
+if [! -f ${ENV_FILE}]; then 
     sudo chmod +x ${ENV_FILE}
     ${ENV_FILE}
 fi

@@ -37,6 +37,7 @@ echo " FOD_NEW_APPLICATION=${FOD_NEW_APPLICATION}"
 echo " FOD_NEW_APPLICATION_RELEASE=${FOD_NEW_APPLICATION_RELEASE}"
 echo " FOD_APPLICATION=${FOD_APPLICATION}"
 echo " FOD_RELEASE=${FOD_RELEASE}"
+echo " FOD_RELEASE_ID=${FOD_RELEASE_ID}"
 
 echo "-========== PRE-BUILD TASKS ==========-"
 # Clone Repo
@@ -59,8 +60,10 @@ cd ./TargetApplication
 
 # Build and resolve dependencies
 # mvn clean package
+# mvn package -q -DskipTests -e
 
-# TODO Add Reachability Analysis
+# Reachability Analysis
+# debricked callgraph
 
 echo "# Package application"
 scancentral package -oss -o ../package.zip

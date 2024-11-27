@@ -19,6 +19,7 @@ ECHO " FOD_NEW_APPLICATION=%FOD_NEW_APPLICATION%"
 ECHO " FOD_NEW_APPLICATION_RELEASE=%FOD_NEW_APPLICATION_RELEASE%"
 ECHO " FOD_APPLICATION=%FOD_APPLICATION%"
 ECHO " FOD_RELEASE=%FOD_RELEASE%"
+ECHO " FOD_RELEASE_ID=%FOD_RELEASE_ID%"
 
 ECHO "PRE-BUILD TASKS"
 REM # Clone Repo
@@ -40,8 +41,11 @@ cd TargetApplication
 
 REM # Build and resolve dependencies
 REM call mvn clean package
+REM call mvn package -q -DskipTests -e
 
-REM # TODO Add Reachability Analysis
+REM # Reachability Analysis
+REM call debricked callgraph --no-build
+REM call debricked callgraph
 
 REM # Package application
 call scancentral package -oss -o ..\package.zip

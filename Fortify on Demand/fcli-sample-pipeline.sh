@@ -60,6 +60,8 @@ cd ./TargetApplication
 # Build and resolve dependencies
 # mvn clean package
 
+# TODO Add Reachability Analysis
+
 echo "# Package application"
 scancentral package -oss -o ../package.zip
 

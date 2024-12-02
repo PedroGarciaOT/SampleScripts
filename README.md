@@ -1,5 +1,5 @@
 # Sample Scripts
-Sample scripts create using Fortify CLI.
+Sample scripts created using Fortify CLI.
 
 Fortify CLI documetation available at https://fortify.github.io/fcli/
 

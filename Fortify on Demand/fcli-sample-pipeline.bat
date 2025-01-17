@@ -8,7 +8,7 @@ REM # use setenv script to set environment variables
 call setenv.bat
 
 ECHO ON
-
+ECHO "======================================================================"
 ECHO " PATH=%PATH%"
 ECHO " FOD_URL=%FOD_URL%"
 ECHO " FOD_CLIENT_ID=%FOD_CLIENT_ID%"
@@ -20,14 +20,14 @@ ECHO " FOD_NEW_APPLICATION_RELEASE=%FOD_NEW_APPLICATION_RELEASE%"
 ECHO " FOD_APPLICATION=%FOD_APPLICATION%"
 ECHO " FOD_RELEASE=%FOD_RELEASE%"
 ECHO " FOD_RELEASE_ID=%FOD_RELEASE_ID%"
-
+ECHO "======================================================================"
 ECHO "PRE-BUILD TASKS"
 REM # Clone Repo
 git clone -b main https://github.com/fortify/IWA-Java.git TargetApplication
 
 REM # Download and unpack fcli 
 curl -sL https://github.com/fortify/fcli/releases/latest/download/fcli-windows.zip -o fcli-windows.zip
-unzip -qq fcli-windows.zip -d .\
+unzip -qq -o fcli-windows.zip -d .\
 
 REM # Install tools
 fcli tool sc-client install --version latest
@@ -35,7 +35,7 @@ fcli tool sc-client install --version latest
 fcli tool fod-uploader install --version latest
 
 fcli tool debricked-cli install --version latest
-
+ECHO "======================================================================"
 ECHO "BUILD TASKS"
 cd TargetApplication
 
@@ -51,7 +51,7 @@ REM # Package application
 call scancentral package -oss -o ..\package.zip
 
 cd ..
-
+ECHO "======================================================================"
 ECHO "POST-BUILD TASKS"
 REM # Login into FoD
 REM #fcli fod session login --url %FOD_URL% --client-id %FOD_CLIENT_ID% --client-secret %FOD_CLIENT_SECRET% -k

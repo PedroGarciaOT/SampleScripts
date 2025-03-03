@@ -29,7 +29,7 @@ echo "-========== PRE-BUILD TASKS ==========-"
 
 curl -s -o scancentral.zip -D - -H "fortify-client: ${SC_SAST_CLIENT_TOKEN}" ${SC_SAST_URL}/rest/v2/update/download
 mkdir -p ${SC_CLIENT_DIR}/
-unzip -qq scancentral.zip -d ${SC_CLIENT_DIR}/
+unzip -qq -o scancentral.zip -d ${SC_CLIENT_DIR}/
 
 # scancentral -url ${SC_SAST_URL} update
 # scancentral -sscurl ${SSC_URL} -ssctoken ${SC_SAST_TOKEN} update

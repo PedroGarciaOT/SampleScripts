@@ -5,6 +5,7 @@
 export SSC_URL=
 export SC_SAST_SENSOR_VERSION=
 export SC_SAST_CLIENT_TOKEN=
+export SCANCENTRAL_VM_OPTS=-Dclient_auth_token=${SC_SAST_CLIENT_TOKEN} -Drestapi_connect_timeout=10000
 
 export SSC_USER=
 export SSC_PASSWORD=

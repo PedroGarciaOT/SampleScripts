@@ -21,7 +21,7 @@ ECHO " SSC_VERSION_NAME=%SSC_VERSION_NAME%"
 ECHO " SSC_VERSION_ID=%SSC_VERSION_ID%"
 ECHO "======================================================================"
 
-curl -s -o scancentral.zip -D - -H "fortify-client: %SC_SAST_CLIENT_TOKEN%" %SC_SAST_URL%/rest/v2/update/download
+curl -s -o scancentral.zip -H "fortify-client: %SC_SAST_CLIENT_TOKEN%" %SC_SAST_URL%/rest/v2/update/download
 mkdir %SC_CLIENT_DIR%
 unzip -qq -o scancentral.zip -d %SC_CLIENT_DIR%
 

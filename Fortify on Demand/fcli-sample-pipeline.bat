@@ -1,8 +1,8 @@
 ECHO OFF
 cls
+ECHO "-========== PIPELINE SETTINGS ==========-"
 REM # Set environment variables 
-set PATH=%USERPROFILE%\fortify\tools\bin;%PATH%
-set FOD_URL="https://api.ams.fortify.com/"
+SET PATH=%USERPROFILE%\fortify\tools\bin;%PATH%
 
 REM # use setenv script to set environment variables
 call setenv.bat
@@ -10,7 +10,7 @@ call setenv.bat
 ECHO ON
 ECHO "======================================================================"
 ECHO " PATH=%PATH%"
-ECHO " FOD_URL=%FOD_URL%"
+ECHO " FOD_API_URL=%FOD_API_URL%"
 ECHO " FOD_CLIENT_ID=%FOD_CLIENT_ID%"
 ECHO " FOD_USER=%FOD_USER%"
 ECHO " FOD_TENANT=%FOD_TENANT%"
@@ -21,7 +21,7 @@ ECHO " FOD_APPLICATION=%FOD_APPLICATION%"
 ECHO " FOD_RELEASE=%FOD_RELEASE%"
 ECHO " FOD_RELEASE_ID=%FOD_RELEASE_ID%"
 ECHO "======================================================================"
-ECHO "PRE-BUILD TASKS"
+ECHO "-========== PRE-BUILD TASKS ==========-"
 REM # Clone Repo
 git clone -b main https://github.com/fortify/IWA-Java.git TargetApplication
 
@@ -30,13 +30,16 @@ curl -sL https://github.com/fortify/fcli/releases/latest/download/fcli-windows.z
 unzip -qq -o fcli-windows.zip -d .\
 
 REM # Install tools
+fcli tool definitions update
+
 fcli tool sc-client install --version latest
+
+fcli tool debricked-cli install --version latest
 
 fcli tool fod-uploader install --version latest
 
-fcli tool debricked-cli install --version latest
 ECHO "======================================================================"
-ECHO "BUILD TASKS"
+ECHO "-========== BUILD TASKS ==========-"
 cd TargetApplication
 
 REM # Build and resolve dependencies
@@ -52,10 +55,10 @@ call scancentral package -oss -o ..\package.zip
 
 cd ..
 ECHO "======================================================================"
-ECHO "POST-BUILD TASKS"
+ECHO "-========== POST-BUILD TASKS ==========-"
 REM # Login into FoD
-REM #fcli fod session login --url %FOD_URL% --client-id %FOD_CLIENT_ID% --client-secret %FOD_CLIENT_SECRET% -k
-fcli fod session login --url %FOD_URL% --user %FOD_USER% --password %FOD_PASSWORD% --tenant %FOD_TENANT% -k
+REM #fcli fod session login --url %FOD_API_URL% --client-id %FOD_CLIENT_ID% --client-secret %FOD_CLIENT_SECRET% -k
+fcli fod session login --url %FOD_API_URL% --user %FOD_USER% --password %FOD_PASSWORD% --tenant %FOD_TENANT% -k
 
 REM # Create an application
 REM fcli fod app create %FOD_NEW_APPLICATION% --auto-required-attrs --criticality "High" -d "FCLI created application" --delim "application:release" --owner %FOD_USER% --release %FOD_NEW_APPLICATION_RELEASE% --release-description "FCLI created release" --status "Production" --type "Web" --store fodapp 

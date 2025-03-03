@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # export environment variables 
-
+export FOD_API_URL="https://api.ams.fortify.com/"
 export FOD_CLIENT_ID=
 export FOD_CLIENT_SECRET=
 export FOD_USER=

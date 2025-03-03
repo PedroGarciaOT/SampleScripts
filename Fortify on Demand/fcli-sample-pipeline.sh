@@ -3,21 +3,8 @@ clear
 echo "-========== PIPELINE SETTINGS ==========-"
 # export environment variables 
 export PATH=${HOME}/fortify/tools/bin:${PATH}
-export FOD_URL="https://api.ams.fortify.com/"
-# export FOD_CLIENT_ID=
-# export FOD_CLIENT_SECRET=
-# export FOD_USER=
-# export FOD_PASSWORD=
-# export FOD_TENANT=
 
 # Entitlement Id is available at https://ams.fortify.com/Admin/Entitlements
-# export FOD_ENTITLEMENT_ID=
-
-# export FOD_NEW_APPLICATION=
-# export FOD_NEW_APPLICATION_RELEASE=
-
-# export FOD_APPLICATION=
-# export FOD_RELEASE=
 
 # use setenv script to set environment variables
 export ENV_FILE="./setenv.sh"
@@ -28,7 +15,7 @@ if [ -f ${ENV_FILE} ]; then
 fi
 
 echo " PATH=${PATH}"
-echo " FOD_URL=${FOD_URL}"
+echo " FOD_API_URL=${FOD_API_URL}"
 echo " FOD_CLIENT_ID=${FOD_CLIENT_ID}"
 echo " FOD_USER=${FOD_USER}"
 echo " FOD_TENANT=${FOD_TENANT}"
@@ -44,16 +31,21 @@ echo "-========== PRE-BUILD TASKS ==========-"
 git clone -b main https://github.com/fortify/IWA-Java.git ./TargetApplication
 
 # Download and unpack fcli 
+#curl -sL https://github.com/fortify/fcli/releases/latest/download/fcli-mac.tgz -o fcli-mac.tgz
+#tar -pxzf fcli-mac.tgz
 curl -sL https://github.com/fortify/fcli/releases/latest/download/fcli-linux.tgz -o fcli-linux.tgz
 tar -pxzf fcli-linux.tgz
+
 source ./fcli_completion
 
 echo "# Install tools"
+./fcli tool definitions update
+
 ./fcli tool sc-client install --version latest
 
-./fcli tool fod-uploader install --version latest
-
 ./fcli tool debricked-cli install --version latest
+
+./fcli tool fod-uploader install --version latest
 
 echo "-========== BUILD TASKS ==========-"
 cd ./TargetApplication
@@ -72,8 +64,8 @@ cd ../
 
 echo "-========== POST-BUILD TASKS ==========-"
 echo "# Login into Fortify on Demand"
-#./fcli fod session login --url ${FOD_URL} --client-id ${FOD_CLIENT_ID} --client-secret ${FOD_CLIENT_SECRET} -k
-./fcli fod session login --url ${FOD_URL} --user ${FOD_USER} --password ${FOD_PASSWORD} --tenant ${FOD_TENANT} -k
+#./fcli fod session login --url ${FOD_API_URL} --client-id ${FOD_CLIENT_ID} --client-secret ${FOD_CLIENT_SECRET} -k
+./fcli fod session login --url ${FOD_API_URL} --user ${FOD_USER} --password ${FOD_PASSWORD} --tenant ${FOD_TENANT} -k
 
 # Create an application
 # ./fcli fod app create ${FOD_NEW_APPLICATION} --auto-required-attrs --criticality "High" -d "FCLI created application" --delim "application:release" --owner ${FOD_USER} --release ${FOD_NEW_APPLICATION_RELEASE} --release-description "FCLI created release" --status "Production" --type "Web" --store fodapp 

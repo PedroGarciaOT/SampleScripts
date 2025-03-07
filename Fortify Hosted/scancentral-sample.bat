@@ -28,6 +28,9 @@ unzip -qq -o scancentral.zip -d %SC_CLIENT_DIR%
 REM scancentral -url %SC_SAST_URL% update
 REM scancentral -sscurl %SSC_URL% -ssctoken %SC_SAST_TOKEN% update
 
+git clone -b main https://github.com/fortify/IWA-Java.git TargetApplication
+cd TargetApplication
+
 REM SET SCANCENTRAL_BUILD_OPTS=""
 REM # scancentral -sscurl <ssc_url> -ssctoken <token> start ‑upload -versionid <app_version_id>
 REM scancentral -sscurl %SSC_URL% -ssctoken %SSC_CI_TOKEN% start -upload -versionid %SSC_VERSION_ID%

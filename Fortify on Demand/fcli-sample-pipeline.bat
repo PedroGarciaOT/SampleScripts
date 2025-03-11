@@ -20,10 +20,12 @@ ECHO " FOD_NEW_APPLICATION_RELEASE=%FOD_NEW_APPLICATION_RELEASE%"
 ECHO " FOD_APPLICATION=%FOD_APPLICATION%"
 ECHO " FOD_RELEASE=%FOD_RELEASE%"
 ECHO " FOD_RELEASE_ID=%FOD_RELEASE_ID%"
+ECHO " GIT_BRANCH=%GIT_BRANCH%"
+ECHO " GIT_REPO=%GIT_REPO%"
 ECHO "======================================================================"
 ECHO "-========== PRE-BUILD TASKS ==========-"
 REM # Clone Repo
-git clone -b main https://github.com/fortify/IWA-Java.git TargetApplication
+git clone -b %GIT_BRANCH% %GIT_REPO% TargetApplication
 
 REM # Download and unpack fcli 
 curl -sL https://github.com/fortify/fcli/releases/latest/download/fcli-windows.zip -o fcli-windows.zip

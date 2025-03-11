@@ -23,6 +23,8 @@ echo " SSC_USER=${SSC_USER}"
 echo " SSC_APPLICATION_NAME=${SSC_APPLICATION_NAME}"
 echo " SSC_VERSION_NAME=${SSC_VERSION_NAME}"
 echo " SSC_VERSION_ID=${SSC_VERSION_ID}"
+echo " GIT_BRANCH=${GIT_BRANCH}"
+echo " GIT_REPO=${GIT_REPO}"
 echo "======================================================================"
 echo "-========== PRE-BUILD TASKS ==========-"
 
@@ -34,7 +36,7 @@ unzip -qq -o scancentral.zip -d ${SC_CLIENT_DIR}/
 # scancentral -url ${SC_SAST_URL} update
 # scancentral -sscurl ${SSC_URL} -ssctoken ${SC_SAST_TOKEN} update
 
-git clone -b main https://github.com/fortify/IWA-Java.git ./TargetApplication
+git clone -b ${GIT_BRANCH} ${GIT_REPO} ./TargetApplication
 cd ./TargetApplication
 
 # export SCANCENTRAL_BUILD_OPTS=

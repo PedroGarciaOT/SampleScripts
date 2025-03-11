@@ -19,6 +19,8 @@ ECHO " SSC_USER=%SSC_USER%"
 ECHO " SSC_APPLICATION_NAME=%SSC_APPLICATION_NAME%"
 ECHO " SSC_VERSION_NAME=%SSC_VERSION_NAME%"
 ECHO " SSC_VERSION_ID=%SSC_VERSION_ID%"
+ECHO " GIT_BRANCH=%GIT_BRANCH%"
+ECHO " GIT_REPO=%GIT_REPO%"
 ECHO "======================================================================"
 
 curl -s -S -o scancentral.zip -H "fortify-client: %SC_SAST_CLIENT_TOKEN%" %SC_SAST_URL%/rest/v2/update/download
@@ -28,7 +30,7 @@ unzip -qq -o scancentral.zip -d %SC_CLIENT_DIR%
 REM scancentral -url %SC_SAST_URL% update
 REM scancentral -sscurl %SSC_URL% -ssctoken %SC_SAST_TOKEN% update
 
-git clone -b main https://github.com/fortify/IWA-Java.git TargetApplication
+git clone -b %GIT_BRANCH% %GIT_REPO% TargetApplication
 cd TargetApplication
 
 REM SET SCANCENTRAL_BUILD_OPTS=""

@@ -23,10 +23,12 @@ echo " SSC_NEW_VERSION_NAME=${SSC_NEW_VERSION_NAME}"
 echo " SSC_APPLICATION_NAME=${SSC_APPLICATION_NAME}"
 echo " SSC_VERSION_NAME=${SSC_VERSION_NAME}"
 echo " SSC_VERSION_ID=${SSC_VERSION_ID}"
+echo " GIT_BRANCH=${GIT_BRANCH}"
+echo " GIT_REPO=${GIT_REPO}"
 echo "======================================================================"
 echo "-========== PRE-BUILD TASKS ==========-"
 ## Clone Repo
-git clone -b main https://github.com/fortify/IWA-Java.git TargetApplication
+git clone -b ${GIT_BRANCH} ${GIT_REPO} ./TargetApplication
 
 # Download and unpack fcli 
 #curl -sL https://github.com/fortify/fcli/releases/latest/download/fcli-mac.tgz -o fcli-mac.tgz

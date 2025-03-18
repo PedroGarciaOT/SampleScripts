@@ -41,7 +41,7 @@ source ./fcli_completion
 ## Install tools
 ./fcli tool definitions update
 
-./fcli tool sc-client install --version latest -y
+./fcli tool sc-client install --version latest --client-auth-token ${SC_SAST_CLIENT_TOKEN} --confirm
 
 ./fcli tool debricked-cli install --version latest -y
 
@@ -60,7 +60,7 @@ echo "-========== POST-BUILD TASKS ==========-"
 echo "# Login into SSC"
 # ./fcli ssc session login --url ${SSC_URL} --user ${SSC_USER} --password ${SSC_PASSWORD} -k
 # ./fcli ssc session login --url ${SSC_URL} --token ${SSC_TOKEN} -k
-./fcli ssc session login --url ${SSC_URL} --ci-token ${SSC_CI_TOKEN} -k
+./fcli ssc session login --url ${SSC_URL} --token ${SSC_CI_TOKEN} --sc-sast-url ${SC_SAST_URL} --client-auth-token ${SC_SAST_CLIENT_TOKEN} -k
 
 ## TODO Create a new application
 
@@ -71,10 +71,10 @@ echo "# Print release details"
 ./fcli util variable contents sscappversion -o json
 
 echo "# Login into SC SAST"
-./fcli sc-sast session login --client-auth-token %SC_SAST_CLIENT_TOKEN% --ssc-url ${SSC_URL} --ssc-ci-token ${SSC_CI_TOKEN} -k
+./fcli sc-sast session login --client-auth-token  ${SC_SAST_CLIENT_TOKEN} --ssc-url ${SSC_URL} --ssc-ci-token ${SSC_CI_TOKEN} -k
 
 echo "# Start scan"
-./fcli sc-sast scan start --sensor-version ${SC_SAST_SENSOR_VERSION} --publish-to "::sscappversion::"  -p package.zip --store scsastscan
+./fcli sc-sast scan start --file package.zip --publish-to "::sscappversion::" --publish-as "fcli-samplepipeline.fpr" --store scsastscan
 
 echo "# Print scan request details"
 ./fcli util variable contents scsastscan -o json

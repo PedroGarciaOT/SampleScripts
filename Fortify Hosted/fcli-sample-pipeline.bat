@@ -7,7 +7,6 @@ set PATH=%USERPROFILE%\fortify\tools\bin;%PATH%
 REM # use setenv script to set environment variables
 call setenv.bat
 
-ECHO ON
 ECHO "======================================================================"
 ECHO " PATH=%PATH%"
 ECHO " SSC_URL=%SSC_URL%"
@@ -33,7 +32,7 @@ unzip -qq -o fcli-windows.zip -d .\
 REM # Install tools
 fcli tool definitions update
 
-fcli tool sc-client install --version latest -y
+fcli tool sc-client install --version latest --client-auth-token %SC_SAST_CLIENT_TOKEN% --confirm
 
 fcli tool debricked-cli install --version latest -y
 
@@ -46,33 +45,30 @@ call scancentral package -o ..\package.zip
 cd ..
 ECHO "======================================================================"
 ECHO "-========== POST-BUILD TASKS ==========-"
-REM # Login into SSC
+ECHO "### Login into SSC ###"
 REM #fcli ssc session login --url %SSC_URL% --user %SSC_USER% --password %SSC_PASSWORD% -k
 REM #fcli ssc session login --url %SSC_URL% --token %SSC_TOKEN% -k
-fcli ssc session login --url %SSC_URL% --ci-token %SSC_CI_TOKEN% -k
+fcli ssc session login --url %SSC_URL% --token %SSC_CI_TOKEN% --sc-sast-url %SC_SAST_URL% --client-auth-token %SC_SAST_CLIENT_TOKEN% -k
 
 REM # TODO Create a new application
 
-REM # Create release
+ECHO "### Create new version release ###"
 fcli ssc appversion create --copy-from %SSC_VERSION_ID% --skip-if-exists --store sscappversion %SSC_APPLICATION_NAME%:%SSC_NEW_VERSION_NAME%
 
-REM # Print release details
+ECHO "### Output version details ###"
 fcli util variable contents sscappversion -o json
 
-REM # Login into SC SAST
-fcli sc-sast session login --client-auth-token %SC_SAST_CLIENT_TOKEN% --ssc-url %SSC_URL% --ssc-ci-token %SSC_CI_TOKEN% -k
+ECHO "### Submit SAST scan request ###"
+fcli sc-sast scan start --file package.zip --publish-to "::sscappversion::" --publish-as "fcli-samplepipeline.fpr" --store scsastscan
 
-REM # Start scan
-fcli sc-sast scan start --sensor-version %SC_SAST_SENSOR_VERSION% --publish-to "::sscappversion::"  -p package.zip --store scsastscan
-
-REM # Print scan request details
+ECHO "### Output scan request details ###"
 fcli util variable contents scsastscan -o json
 
-REM # Wait for scan to finish
+ECHO "### Wait for scan to finish ###"
 fcli sc-sast scan wait-for --interval "3m" "::scsastscan::"
 
-REM # Run quality gate
+ECHO "### Run quality gate using check-policy ###"
 fcli ssc action run check-policy --appversion "::sscappversion::"
 
-REM # Logout from SSC
+ECHO "### Logout from Fortify ###"
 fcli ssc session logout

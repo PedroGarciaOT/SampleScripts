@@ -59,7 +59,7 @@ ECHO "### Output version details ###"
 fcli util variable contents sscappversion -o json
 
 ECHO "### Submit SAST scan request ###"
-fcli sc-sast scan start --file package.zip --publish-to "::sscappversion::" --publish-as "fcli-samplepipeline.fpr" --store scsastscan
+fcli sc-sast scan start --file package.zip --publish-to "::sscappversion::" --publish-as "fcli-sample-pipeline.fpr" --store scsastscan
 
 ECHO "### Output scan request details ###"
 fcli util variable contents scsastscan -o json

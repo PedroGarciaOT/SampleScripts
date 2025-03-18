@@ -74,7 +74,7 @@ echo "# Login into SC SAST"
 ./fcli sc-sast session login --client-auth-token  ${SC_SAST_CLIENT_TOKEN} --ssc-url ${SSC_URL} --ssc-ci-token ${SSC_CI_TOKEN} -k
 
 echo "# Start scan"
-./fcli sc-sast scan start --file package.zip --publish-to "::sscappversion::" --publish-as "fcli-samplepipeline.fpr" --store scsastscan
+./fcli sc-sast scan start --file package.zip --publish-to "::sscappversion::" --publish-as "fcli-sample-pipeline.fpr" --store scsastscan
 
 echo "# Print scan request details"
 ./fcli util variable contents scsastscan -o json

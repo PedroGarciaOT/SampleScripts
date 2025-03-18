@@ -43,11 +43,11 @@ source ./fcli_completion
 echo "# Install tools"
 ./fcli tool definitions update
 
-./fcli tool sc-client install --version latest
+./fcli tool sc-client install --version latest -y
 
-./fcli tool debricked-cli install --version latest
+./fcli tool debricked-cli install --version latest -y
 
-./fcli tool fod-uploader install --version latest
+./fcli tool fod-uploader install --version latest -y
 
 echo "-========== BUILD TASKS ==========-"
 cd ./TargetApplication

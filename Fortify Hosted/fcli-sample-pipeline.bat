@@ -33,9 +33,9 @@ unzip -qq -o fcli-windows.zip -d .\
 REM # Install tools
 fcli tool definitions update
 
-fcli tool sc-client install --version latest
+fcli tool sc-client install --version latest -y
 
-fcli tool debricked-cli install --version latest
+fcli tool debricked-cli install --version latest -y
 
 ECHO "======================================================================"
 ECHO "-========== BUILD TASKS ==========-"

@@ -1,0 +1,35 @@
+stages:
+  #- build
+  - test
+
+#maven-build:
+#  stage: build
+#  image: maven:3.9.9-eclipse-temurin-11
+
+#  script:
+#    - echo Building project...
+#    - mvn -Dskip.unit.tests=false -DfailIfNoTests=false package
+
+fortify-sast:
+  stage: test
+  image: fortifydocker/fortify-ci-tools:latest-jdk-11
+
+  variables:
+    SSC_URL: $FH_SSC_URL
+    SSC_TOKEN: $FH_SSC_TOKEN
+    SSC_APP: $FH_SSC_APPLICATION
+    SSC_PV: $FH_SSC_APPLICATION_VERSION
+    SCANCENTRAL_VM_OPTS: '-Dclient_auth_token=$FH_SC_SAST_TOKEN -Drestapi_connect_timeout=10000'
+    SCANCENTRAL_LOG: ${CI_PROJECT_DIR}/logs
+    #SCANCENTRAL_VM_OPTS: -Dclient_auth_token=$FH_SC_SAST_TOKEN ssc_proxy_host=$PROXY_HOST ssc_proxy_port=$PROXY_PORT ctrl_proxy_host=$PROXY_HOST ctrl_proxy_port=$PROXY_PORT
+
+  script:
+    - 'scancentral -sscurl $SSC_URL -ssctoken $SSC_TOKEN start -sp scancentral-package.zip -upload -application $SSC_APP -version $SSC_PV'
+    #- 'scancentral -debug -sscurl $SSC_URL -ssctoken $SSC_TOKEN start -sp scancentral-package.zip -upload -application $SSC_APP -version $SSC_PV'
+
+  # Save the log file as artifacts
+  artifacts:
+    paths:
+      - logs/
+      - scancentral-package.zip
+    expire_in: 1 day

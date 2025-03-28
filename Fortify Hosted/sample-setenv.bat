@@ -1,0 +1,27 @@
+ECHO OFF
+
+REM # Set environment variables 
+
+SET TENANT_ID=
+SET SSC_URL=https://ssc.%TENANT_ID%.fortifyhosted.com
+SET SC_SAST_URL=https://scsastctrl.%TENANT_ID%.fortifyhosted.com/scancentral-ctrl/
+SET SC_SAST_SENSOR_VERSION=24.4
+SET SC_SAST_TOKEN=
+SET SCANCENTRAL_VM_OPTS=-Dclient_auth_token=%SC_SAST_TOKEN% -Drestapi_connect_timeout=10000
+
+SET SSC_USER=
+SET SSC_PASSWORD=
+
+SET SSC_TOKEN=
+SET SC_SAST_CTRL_TOKEN=
+SET SSC_CI_TOKEN=
+
+SET SSC_NEW_APPLICATION_NAME=
+SET SSC_NEW_VERSION_NAME=
+
+SET SSC_APPLICATION_NAME=
+SET SSC_VERSION_NAME=
+SET SSC_VERSION_ID=
+
+SET GIT_REPO=https://github.com/fortify/IWA-Java.git
+SET GIT_BRANCH=main

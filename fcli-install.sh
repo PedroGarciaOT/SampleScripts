@@ -33,14 +33,15 @@ echo "### Install tools ###"
 
 echo "### Configure SC-Client Tool ###"
 
-if [-z "${SC_CLIENT_VERSION}"]; then
+if [ -n "${SC_CLIENT_VERSION}" ]; then
     export SC_CLIENT_CONFIG=${HOME}/fortify/tools/sc-client/${SC_CLIENT_VERSION}/Core/config/client.properties
     echo "ScanCentral Client path=${HOME}/fortify/tools/sc-client/${SC_CLIENT_VERSION}/bin"
-    if [-z "${SCANCENTRAL_AUTH_TOKEN}"]; then 
+    if [ -n "${SCANCENTRAL_AUTH_TOKEN}" ]; then 
+        echo "Setting Default SC_SAST Client Auth Token"
         echo client_auth_token=${SCANCENTRAL_AUTH_TOKEN}>>${SC_CLIENT_CONFIG}
     fi
 
-    if [-z "${DEBRICKED_CLI_VERSION}"]; then
+    if [ -n "${DEBRICKED_CLI_VERSION}" ]; then
         echo "Debricked CLI path=${HOME}/fortify/tools/debricked-cli/${DEBRICKED_CLI_VERSION}/bin" 
         echo debricked_cli_dir=${HOME}/fortify/tools/debricked-cli/${DEBRICKED_CLI_VERSION}/bin>>${SC_CLIENT_CONFIG}
     fi

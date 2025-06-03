@@ -35,6 +35,6 @@ IF DEFINED SC_CLIENT_VERSION (
     IF DEFINED SCANCENTRAL_AUTH_TOKEN (ECHO client_auth_token=%SCANCENTRAL_AUTH_TOKEN%>>%SC_CLIENT_CONFIG%)
     IF DEFINED DEBRICKED_CLI_VERSION (
         ECHO "Debricked CLI path=%USERPROFILE%\fortify\tools\debricked-cli\%DEBRICKED_CLI_VERSION%\bin"
-        ECHO debricked_cli_dir=%USERPROFILE%\\fortify\\tools\\debricked-cli\\%DEBRICKED_CLI_VERSION%\\bin>>%SC_CLIENT_CONFIG%
+        ECHO debricked_cli_dir=%USERPROFILE:\=/%/fortify/tools/debricked-cli/%DEBRICKED_CLI_VERSION%/bin>>%SC_CLIENT_CONFIG%
     )
 )

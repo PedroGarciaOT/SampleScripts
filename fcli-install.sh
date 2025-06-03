@@ -31,16 +31,14 @@ echo "### Install tools ###"
 ./fcli tool debricked-cli install --version ${DEBRICKED_CLI_VERSION} -y
 ./fcli tool fod-uploader install --version latest -y
 
-echo "### Configure SC-Client Tool ###"
-
 if [ -n "${SC_CLIENT_VERSION}" ]; then
+    echo "### Configure SC-Client Tool ###"
     export SC_CLIENT_CONFIG=${HOME}/fortify/tools/sc-client/${SC_CLIENT_VERSION}/Core/config/client.properties
     echo "ScanCentral Client path=${HOME}/fortify/tools/sc-client/${SC_CLIENT_VERSION}/bin"
     if [ -n "${SCANCENTRAL_AUTH_TOKEN}" ]; then 
         echo "Setting Default SC_SAST Client Auth Token"
         echo client_auth_token=${SCANCENTRAL_AUTH_TOKEN}>>${SC_CLIENT_CONFIG}
     fi
-
     if [ -n "${DEBRICKED_CLI_VERSION}" ]; then
         echo "Debricked CLI path=${HOME}/fortify/tools/debricked-cli/${DEBRICKED_CLI_VERSION}/bin" 
         echo debricked_cli_dir=${HOME}/fortify/tools/debricked-cli/${DEBRICKED_CLI_VERSION}/bin>>${SC_CLIENT_CONFIG}
